@@ -1,17 +1,18 @@
-import seaborn as sns 
-import xgboost as xgb 
+from xgboost import XGBClassifier
 
-def main():
-    penguins = sns.load_dataset("penguins")
-    print("Penguins dataset loaded successfully!")
-    print(penguins.head())
-    print(penguins.info())
-
+def create_xgboost_model():
+    # Create a default XGBoost classifier
+    model = XGBClassifier(
+        objective='multi:softmax',  # For multiclass classification
+        num_class=3,               # Number of classes in penguins dataset (Adelie, Chinstrap, Gentoo)
+        eval_metric='mlogloss',    # Multiclass log loss for evaluation
+        random_state=42            # For reproducibility
+    )
+    
+    print("Default XGBoost model created successfully!")
+    print("Model parameters:", model.get_params())
+    
+    return model
 
 if __name__ == "__main__":
-    main()
-
-
-# Create a default XGBoost model
-model = xgb.XGBClassifier()
-print("Default XGBoost model created.")
+    model = create_xgboost_model()
